@@ -1,11 +1,12 @@
 import styles from "./App.module.css"
 import Form from "./components/Form/Form"
+import WeatherDetail from "./components/wheaterdetail/wheaterDetail"
 import useWeather from "./hooks/UseWeather"
   
 function App() {
 
  
-const {fetchWeather}=useWeather()
+const {weather,fetchWeather,hasWeatherData}=useWeather()
   return (
     <>
       <h1 className={styles.tittle}>Buscador de clima</h1>
@@ -13,7 +14,11 @@ const {fetchWeather}=useWeather()
           <Form
             fetchWeather={fetchWeather}
           />
-          <p>2</p>
+          {hasWeatherData && 
+              <WeatherDetail 
+                  weather={weather} 
+              />
+          }
       </div>
     </>
   )
