@@ -1,5 +1,5 @@
 import { countries } from "../../data/countries";
-import { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import styles from "./form.module.css";
 import type { SearchType } from "../../types";
 import Alert from "./Alert/Alert";
@@ -68,3 +68,4 @@ export default function Form({fetchWeather}:FormProps) {
         </form>
     )
 }
+

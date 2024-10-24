@@ -43,18 +43,27 @@ import { useMemo, useState } from "react"
  */
 
   // type Weather=InferOutput<typeof WeatherSchema >
- 
-export  default function  useWeather(){
-    const [weather, setWeather] = useState<Weather>({
-        name: '',
+
+  const initialState={
+
+    name: '',
         main: {
             temp: 0,
             temp_max: 0,
             temp_min: 0
         }
-    })
+
+  }
+ 
+export  default function  useWeather(){
+    const [weather, setWeather] = useState<Weather>(initialState)
+      
+    const[loading,setLoading] = useState(false)
     const fetchWeather=async(search:SearchType)=>{
        const appId='9a952f71b404c22bedd83532e1177ac3'
+       setLoading(true)
+       setWeather(initialState)
+    //    const weatherURL=`http://api.openweathermap.org/data/2.5/weather?q=${search.city},${search.country}&appid=${appId}`       
        try{
                 const geoURL=`http://api.openweathermap.org/geo/1.0/direct?q=${search.city},${search.country}&appid=${appId}`
 
@@ -83,6 +92,7 @@ export  default function  useWeather(){
             if(result.success){
             
              setWeather(result.data)
+           
             
             } 
             //valibot
@@ -97,12 +107,15 @@ export  default function  useWeather(){
 
             console.error( error)
 
+       }finally{
+            setLoading(false)
        }
     }
 
     const hasWeatherData=useMemo(()=>weather.name,[weather])
     return{
         weather,
+        loading,
         fetchWeather,
         hasWeatherData
     }
